@@ -6,7 +6,7 @@ from config import SUPPORT_GROUP
 def botplaylist_markup(_):
     buttons = [
         [
-            InlineKeyboardButton(text=_["S_B_9"], url=SUPPORT_GROUP),
+            InlineKeyboardButton(text="💥 𝕊ᴜᴘᴘᴏʀ𝕋 💥", url=SUPPORT_GROUP),
             InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close"),
         ],
     ]
