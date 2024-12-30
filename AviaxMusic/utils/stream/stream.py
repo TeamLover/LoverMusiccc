@@ -8,8 +8,7 @@ import config
 from AviaxMusic import Carbon, YouTube, app
 from AviaxMusic.core.call import Aviax
 from AviaxMusic.misc import db
-from AviaxMusic.utils.database import (is_active_chat,
-                                       is_video_allowed, music_on)
+from AviaxMusic.utils.database import (music_on)
 from AviaxMusic.utils.exceptions import AssistantErr
 from AviaxMusic.utils.inline.play import (stream_markup, queue_markup,
                                           telegram_markup)
