@@ -9,8 +9,7 @@ from AviaxMusic import Carbon, YouTube, app
 from AviaxMusic.core.call import Aviax
 from AviaxMusic.misc import db
 from AviaxMusic.utils.database import (music_on)
-from AviaxMusic.utils.exceptions import AssistantErr
-from AviaxMusic.utils.inline.playlist 
+from AviaxMusic.utils.exceptions import AssistantErr 
 from AviaxMusic.utils.pastebin import Anonbin
 from AviaxMusic.utils.stream.queue import put_queue, put_queue_index
 from AviaxMusic.utils.thumbnails import gen_thumb, gen_qthumb
