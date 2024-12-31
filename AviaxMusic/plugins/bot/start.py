@@ -22,8 +22,7 @@ from AviaxMusic.utils.database import (add_served_chat,
                                        blacklisted_chats,
                                        get_assistant, get_lang,
                                        get_userss, is_on_off,
-                                       is_served_private_chat)
-from AviaxMusic.utils.decorators.language 
+                                       is_served_private_chat) 
 from AviaxMusic.utils.formatters import get_readable_time
 from AviaxMusic.utils.inline import (help_pannel, private_panel,
                                      start_pannel)
