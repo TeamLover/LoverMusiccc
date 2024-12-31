@@ -48,7 +48,7 @@ async def start_pm(client, message: Message, _):
                 )
 
             if name[0:3] == "del":
-            await del_plist_msg(client=client, message=message, _=_)
+            await del_plist_msg(client=client, message=message,
         if name == "verify":
             await message.reply_text(f"ʜᴇʏ {message.from_user.first_name},\nᴛʜᴀɴᴋs ғᴏʀ ᴠᴇʀɪғʏɪɴɢ ʏᴏᴜʀsᴇʟғ ɪɴ {config.MUSIC_BOT_NAME}, ɴᴏᴡ ʏᴏᴜ ᴄᴀɴ ɢᴏ ʙᴀᴄᴋ ᴀɴᴅ sᴛᴀʀᴛ ᴜsɪɴɢ ᴍᴇ.")
             if await is_on_off(config.LOG):
