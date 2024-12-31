@@ -1,40 +1,39 @@
-
 import asyncio
-import time
-
+import random
 from pyrogram import filters
-from pyrogram.types import (InlineKeyboardButton,
-                            InlineKeyboardMarkup, Message)
+from pyrogram import enums, filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from youtubesearchpython.__future__ import VideosSearch
 
 import config
 from config import BANNED_USERS
-from config import OWNER_ID
+from config.config import OWNER_ID
 from strings import get_string
 from AviaxMusic import Telegram, YouTube, app
-from AviaxMusic.misc import SUDOERS, _boot_
-from AviaxMusic.plugins.Robot.playlist import del_plist_msg
-from AviaxMusic.plugins.Robot.sudoers import sudoers_list
-from AviaxMusic.utils.database import (add_served_chat,
-                                       add_served_user,
-                                       get_served_chats,
-                                       get_served_users,
-                                       blacklisted_chats,
-                                       get_assistant, get_lang,
-                                       get_userss, is_on_off,
-                                       is_served_private_chat) 
-from AviaxMusic.utils.formatters import get_readable_time
-from AviaxMusic.utils.inline import (help_pannel, private_panel,
-                                     start_pannel)
-
+from AviaxMusic.misc import SUDOERS
+from AviaxMusic.plugins.play.playlist import del_plist_msg
+from AviaxMusic.plugins.sudo.sudoers import sudoers_list
+from AviaxMusic.utils.database import (
+    add_served_chat,
+    get_served_chats,
+    get_served_users,
+    is_served_user,
+    add_served_user,
+    blacklisted_chats,
+    get_assistant,
+    get_lang,
+    get_userss,
+    is_on_off,
+    is_served_private_chat,
+)
+from AviaxMusic.utils.decorators.language import LanguageStart
+from AviaxMusic.utils.inline import help_pannel, private_panel, start_pannel
+from AviaxMusic.utils.command import commandpro
 loop = asyncio.get_running_loop()
 
 
 @app.on_message(
-    filters.command(get_command("START_COMMAND"))
-    & filters.private
-    & ~filters.edited
-    & ~BANNED_USERS
+    filters.command(get_command("START_COMMAND")) & filters.private & ~BANNED_USERS
 )
 @LanguageStart
 async def start_comm(client, message: Message, _):
@@ -43,16 +42,12 @@ async def start_comm(client, message: Message, _):
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            await message.reply_sticker("CAACAgUAAxkBAAJE8GK4EsoLVZC2SW5W5Q-QAkaoN8f_AAL9BQACiy14VGoQxOCDfE1KKQQ")
-            return await message.reply_photo(
-                       photo=config.START_IMG_URL,
-                       caption=_["help_1"], reply_markup=keyboard
-            )
+            return await message.reply_text(_["help_1"], reply_markup=keyboard)
         if name[0:4] == "song":
             return await message.reply_text(_["song_2"])
         if name[0:3] == "sta":
             m = await message.reply_text(
-                f"🥱 ɢᴇᴛᴛɪɴɢ ʏᴏᴜʀ ᴩᴇʀsᴏɴᴀʟ sᴛᴀᴛs ғʀᴏᴍ {config.MUSIC_BOT_NAME} sᴇʀᴠᴇʀ."
+                "ɢᴇᴛᴛɪɴɢ ʏᴏᴜʀ ᴩᴇʀsᴏɴᴀʟ sᴛᴀᴛs ғʀᴏᴍ {config.MUSIC_BOT_NAME} sᴇʀᴠᴇʀ."
             )
             stats = await get_userss(message.from_user.id)
             tot = len(stats)
@@ -88,16 +83,14 @@ async def start_comm(client, message: Message, _):
                     details = stats.get(vidid)
                     title = (details["title"][:35]).title()
                     if vidid == "telegram":
-                        msg += f"🔗[ᴛᴇʟᴇɢʀᴀᴍ ᴍᴇᴅɪᴀ](https://t.me/T_c_c_network) ** ᴩʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs**\n\n"
+                        msg += f"🔗[ᴛᴇʟᴇɢʀᴀᴍ ᴍᴇᴅɪᴀ](https://t.me/Savvy_robot_support) ** ᴩʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs**\n\n"
                     else:
                         msg += f"🔗 [{title}](https://www.youtube.com/watch?v={vidid}) ** played {count} times**\n\n"
                 msg = _["ustats_2"].format(tot, tota, limit) + msg
                 return videoid, msg
 
             try:
-                videoid, msg = await loop.run_in_executor(
-                    None, get_stats
-                )
+                videoid, msg = await loop.run_in_executor(None, get_stats)
             except Exception as e:
                 print(e)
                 return
@@ -122,9 +115,7 @@ async def start_comm(client, message: Message, _):
             if lyrics:
                 return await Telegram.send_split_text(message, lyrics)
             else:
-                return await message.reply_text(
-                    "ғᴀɪʟᴇᴅ ᴛᴏ ɢᴇᴛ ʟʏʀɪᴄs."
-                )
+                return await message.reply_text("ғᴀɪʟᴇᴅ ᴛᴏ ɢᴇᴛ ʟʏʀɪᴄs.")
         if name[0:3] == "del":
             await del_plist_msg(client=client, message=message, _=_)
         if name == "verify":
@@ -135,8 +126,7 @@ async def start_comm(client, message: Message, _):
                 return await app.send_message(
                     config.LOG_GROUP_ID,
                     f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ <code>ᴠᴇʀɪғʏ ʜɪᴍsᴇʟғ</code>\n\n**ᴜsᴇʀ ɪᴅ:** {sender_id}\n**ᴜsᴇʀɴᴀᴍᴇ:** {sender_name}",
-                )
-            return
+                )   
         if name[0:3] == "inf":
             m = await message.reply_text("🔎")
             query = (str(name)).replace("info_", "", 1)
@@ -146,9 +136,7 @@ async def start_comm(client, message: Message, _):
                 title = result["title"]
                 duration = result["duration"]
                 views = result["viewCount"]["short"]
-                thumbnail = result["thumbnails"][0]["url"].split("?")[
-                    0
-                ]
+                thumbnail = result["thumbnails"][0]["url"].split("?")[0]
                 channellink = result["channel"]["link"]
                 channel = result["channel"]["name"]
                 link = result["link"]
@@ -156,25 +144,21 @@ async def start_comm(client, message: Message, _):
             searched_text = f"""
 😲**ᴛʀᴀᴄᴋ ɪɴғᴏʀɴᴀᴛɪᴏɴ**😲
 
-📌 **ᴛɪᴛʟᴇ:** {title}
+📌**ᴛɪᴛʟᴇ:** {title}
 
-⏳ **ᴅᴜʀᴀᴛɪᴏɴ:** {duration} ᴍɪɴᴜᴛᴇs
-👀 **ᴠɪᴇᴡs:** `{views}`
-⏰ **ᴩᴜʙʟɪsʜᴇᴅ ᴏɴ:** {published}
-🎥 **ᴄʜᴀɴɴᴇʟ:** {channel}
-📎 **ᴄʜᴀɴɴᴇʟ ʟɪɴᴋ:** [ᴠɪsɪᴛ ᴄʜᴀɴɴᴇʟ]({channellink})
-🔗 **ʟɪɴᴋ:** [ᴡᴀᴛᴄʜ ᴏɴ ʏᴏᴜᴛᴜʙᴇ]({link})
+⏳**ᴅᴜʀᴀᴛɪᴏɴ:** {duration} ᴍɪɴᴜᴛᴇs
+👀**ᴠɪᴇᴡs:** `{views}`
+⏰**ᴩᴜʙʟɪsʜᴇᴅ ᴏɴ:** {published}
+🎥**ᴄʜᴀɴɴᴇʟ:** {channel}
+📎**ᴄʜᴀɴɴᴇʟ ʟɪɴᴋ:** [ᴠɪsɪᴛ ᴄʜᴀɴɴᴇʟ]({channellink})
+🔗**ʟɪɴᴋ:** [ᴡᴀᴛᴄʜ ᴏɴ ʏᴏᴜᴛᴜʙᴇ]({link})
 
 💖 sᴇᴀʀᴄʜ ᴩᴏᴡᴇʀᴇᴅ ʙʏ {config.MUSIC_BOT_NAME}"""
             key = InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(
-                            text="• ʏᴏᴜᴛᴜʙᴇ •", url=f"{link}"
-                        ),
-                        InlineKeyboardButton(
-                            text="• sᴜᴩᴩᴏʀᴛ •", url="https://t.me/T_c_c_network"
-                        ),
+                        InlineKeyboardButton(text="• ʏᴏᴜᴛᴜʙᴇ •", url=f"{link}"),
+                        InlineKeyboardButton(text="• ᴄʟᴏsᴇ •", callback_data="close"),
                     ],
                 ]
             )
@@ -183,7 +167,7 @@ async def start_comm(client, message: Message, _):
                 message.chat.id,
                 photo=thumbnail,
                 caption=searched_text,
-                parse_mode="markdown",
+                parse_mode=enums.ParseMode.MARKDOWN,
                 reply_markup=key,
             )
             if await is_on_off(config.LOG):
@@ -200,30 +184,13 @@ async def start_comm(client, message: Message, _):
         except:
             OWNER = None
         out = private_panel(_, app.username, OWNER)
-        if config.START_IMG_URL:
-            try:
-                await message.reply_sticker("CAACAgQAAx0CZIiVngABBB6tYvs-dV4rbsUv3h3oKbscOz07ofQAAkkMAAJLUMlT3uEIKksW8bwpBA")
-                up = int(time.time() - _boot_)
-                uptime = f"{get_readable_time((up))}"
-                await message.reply_photo(
-                    photo=config.START_IMG_URL,
-                    caption=_["start_2"].format(
-                        message.from_user.first_name,
-                        config.MUSIC_BOT_NAME,
-                        uptime
-                    ),
-                    reply_markup=InlineKeyboardMarkup(out),
-                )
-            except:
-                await message.reply_text(
-                    _["start_2"].format(message.from_user.first_name, config.MUSIC_BOT_NAME, uptime),
-                    reply_markup=InlineKeyboardMarkup(out),
-                )
-        else:
-            await message.reply_text(
-                _["start_2"].format(message.from_user.first_name, config.MUSIC_BOT_NAME, uptime),
-                reply_markup=InlineKeyboardMarkup(out),
-            )
+        served_chats = len(await get_served_chats())
+        served_users = len(await get_served_users())
+        await message.reply_photo(
+            random.choice(SAVVY_PIC),
+            caption=PM_START_TEXT.format(message.from_user.mention, config.MUSIC_BOT_NAME, served_users, served_chats),
+            reply_markup=InlineKeyboardMarkup(out),
+        )
         if await is_on_off(config.LOG):
             sender_id = message.from_user.id
             sender_name = message.from_user.first_name
@@ -231,23 +198,15 @@ async def start_comm(client, message: Message, _):
                 config.LOG_GROUP_ID,
                 f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʏᴏᴜʀ ʙᴏᴛ.\n\n**ᴜsᴇʀ ɪᴅ:** {sender_id}\n**ᴜsᴇʀɴᴀᴍᴇ:** {sender_name}",
             )
-
-
 @app.on_message(
-    filters.command(get_command("START_COMMAND"))
-    & filters.group
-    & ~filters.edited
-    & ~BANNED_USERS
+    filters.command(get_command("START_COMMAND")) & filters.group & ~BANNED_USERS
 )
 @LanguageStart
 async def testbot(client, message: Message, _):
     OWNER = OWNER_ID[0]
     out = start_pannel(_, app.username, OWNER)
-    return await message.reply_photo(
-               photo=config.START_IMG_URL,
-               caption=_["start_1"].format(
-            message.chat.title, config.MUSIC_BOT_NAME
-        ),
+    return await message.reply_text(
+        _["start_1"].format(message.chat.title, config.MUSIC_BOT_NAME),
         reply_markup=InlineKeyboardMarkup(out),
     )
 
@@ -272,7 +231,7 @@ async def welcome(client, message: Message):
             _ = get_string(language)
             if member.id == app.id:
                 chat_type = message.chat.type
-                if chat_type != "supergroup":
+                if chat_type != enums.ChatType.SUPERGROUP:
                     await message.reply_text(_["start_6"])
                     return await app.leave_chat(message.chat.id)
                 if chat_id in await blacklisted_chats():
@@ -283,11 +242,9 @@ async def welcome(client, message: Message):
                     )
                     return await app.leave_chat(chat_id)
                 userbot = await get_assistant(message.chat.id)
-                OWNER = OWNER_ID[0]
-                out = start_pannel(_, app.username, OWNER)
-                await message.reply_photo(
-                    photo=config.START_IMG_URL,
-                    caption=_["start_3"].format(
+                out = start_pannel(_)
+                await message.reply_text(
+                    _["start_3"].format(
                         config.MUSIC_BOT_NAME,
                         userbot.username,
                         userbot.id,
@@ -296,16 +253,28 @@ async def welcome(client, message: Message):
                 )
             if member.id in config.OWNER_ID:
                 return await message.reply_text(
-                    _["start_4"].format(
-                        config.MUSIC_BOT_NAME, member.mention
-                    )
+                    _["start_4"].format(config.MUSIC_BOT_NAME, member.mention)
                 )
             if member.id in SUDOERS:
                 return await message.reply_text(
-                    _["start_5"].format(
-                        config.MUSIC_BOT_NAME, member.mention
-                    )
+                    _["start_5"].format(config.MUSIC_BOT_NAME, member.mention)
                 )
             return
         except:
             return
+            
+@app.on_message(commandpro(["/verify", "savvyverification"]))
+async def verify(client, message: Message):
+    if await is_served_user(message.from_user.id):
+        await message.reply_text(
+            text="ʏᴏᴜ ᴀʀᴇ ᴀʟʀᴇᴀᴅʏ ᴠᴇʀɪғɪᴇᴅ",
+        )
+        return
+    await add_served_user(message.from_user.id)
+    await message.reply_photo(
+        random.choice(SAVVY_PIC),
+        caption=f"""━━━━━━━━━━━━━━━━━━━━━━━━\n\n✪ **ᴄᴏɴɢʀᴀᴛᴜʟᴀᴛɪᴏɴ** 🎉\n✪ ɴᴏᴡ ʏᴏᴜ ᴀʀᴇ ᴠᴇʀɪғɪᴇᴅ ᴍᴇᴍʙᴇʀ ɢᴏ ʙᴀᴄᴋ ᴀɴᴅ ᴇɴᴊᴏʏ ᴏᴜʀ sᴇʀᴠɪᴄᴇ ᴀɴᴅ ᴘʟᴀʏ ᴍᴜsɪᴄ  ..\n\n━━━━━━━━━━━━━━━━━━━━━━━━""",
+        reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("๏ sᴜᴘᴘᴏʀᴛ ๏", url=f"https://t.me/savvy_robot_support")]]
+        ),
+    )            pp
