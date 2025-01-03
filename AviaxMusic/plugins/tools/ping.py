@@ -9,9 +9,6 @@ from AviaxMusic.core.call import Aviax
 from AviaxMusic.utils import bot_sys_stats
 from AviaxMusic.utils.decorators.language import language
 
-### Commands
-PING_COMMAND = get_command("PING_COMMAND")
-
 
 @app.on_message(
     filters.command(PING_COMMAND)
