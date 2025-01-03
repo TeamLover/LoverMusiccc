@@ -11,7 +11,7 @@ from AviaxMusic.utils.decorators.language import language
 
 
 @app.on_message(filters.command(["ping", "alive"]) & ~BANNED_USERS)
-)
+
 @language
 async def ping_com(client, message: Message, _):
     response = await message.reply_photo(
