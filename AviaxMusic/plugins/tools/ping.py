@@ -3,12 +3,11 @@ from datetime import datetime
 from pyrogram import filters
 from pyrogram.types import Message
 
-from config import PING_IMG_URL
+from config import BANNED_USERS, PING_IMG_URL
 from AviaxMusic import app
 from AviaxMusic.core.call import Aviax
 from AviaxMusic.utils import bot_sys_stats
 from AviaxMusic.utils.decorators.language import language
-from AviaxMusic.utils.inline.play import close_keyboard
 
 ### Commands
 PING_COMMAND = get_command("PING_COMMAND")
