@@ -10,8 +10,7 @@ from AviaxMusic.utils import bot_sys_stats
 from AviaxMusic.utils.decorators.language import language
 
 
-@app.on_message(
-    filters.command(PING_COMMAND)
+@app.on_message(filters.command(["ping", "alive"]) & ~BANNED_USERS)
 )
 @language
 async def ping_com(client, message: Message, _):
