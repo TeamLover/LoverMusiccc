@@ -4,7 +4,7 @@ import psutil
 
 from AviaxMusic.misc import _boot_
 
-from AviaxMusic.formatters import get_readable_time
+from .formatters import get_readable_time
 
 
 async def bot_sys_stats():
