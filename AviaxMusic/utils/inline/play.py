@@ -61,14 +61,18 @@ def stream_markup_timer(_, chat_id, played, dur):
         ],
         [
             InlineKeyboardButton(
-                text=f"{played} {bar} {dur}",
-                callback_data="GetTimer",
+                text="🇮🇳 ᴩʟᴀʏʟɪsᴛ 🇮🇳",
+                callback_data=f"add_playlist {videoid}",
+            ),
+            InlineKeyboardButton(
+                text="💫 sᴜᴩᴩᴏʀᴛ 💫", url=f"https://t.me/Lover_Music_Support"
             )
         ],
-        [   
-            InlineKeyboardButton(text="💫 sᴜᴩᴩᴏʀᴛ 💫", url=f"https://t.me/Lover_Music_Support"),
-            InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
-    ]
+        [
+            InlineKeyboardButton(
+                text="✯ ᴄʟᴏsᴇ ✯", callback_data="close"
+            )
+        ],
     return buttons
 
 
@@ -80,10 +84,20 @@ def stream_markup(_, chat_id):
             InlineKeyboardButton(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}"),
             InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
         ],
-        [   
-            InlineKeyboardButton(text="💫 sᴜᴩᴩᴏʀᴛ 💫", url=f"https://t.me/Lover_Music_Support"),
-            InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
-    ]
+        [
+            InlineKeyboardButton(
+                text="🇮🇳 ᴩʟᴀʏʟɪsᴛ 🇮🇳",
+                callback_data=f"add_playlist {videoid}",
+            ),
+            InlineKeyboardButton(
+                text="💫 sᴜᴩᴩᴏʀᴛ 💫", url=f"https://t.me/Lover_Music_Support"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text="✯ ᴄʟᴏsᴇ ✯", callback_data="close"
+            )
+        ],
     return buttons
 
 
