@@ -1,11 +1,11 @@
 import config
 
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-
+from AviaxMusic.utils.formatters import time_to_seconds
 
 ## After Edits with Timer Bar
 
-def time_to_sec(time: str):
+def time_to_seconds(time: str):
     x = time.split(":")
 
     if len(x) == 2:
@@ -23,8 +23,8 @@ def time_to_sec(time: str):
     return total_sec
 
 def stream_markup_timer(_, videoid, chat_id, played, dur):
-    played_sec = time_to_sec(played)
-    total_sec = time_to_sec(dur)
+    played_sec = time_to_seconds(played)
+    total_sec = time_to_seconds(dur)
 
     x, y = str(round(played_sec/total_sec,1)).split(".")
     pos = int(y)
@@ -76,8 +76,8 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
 
 
 def telegram_markup_timer(_, chat_id, played, dur):
-    played_sec = time_to_sec(played)
-    total_sec = time_to_sec(dur)
+    played_sec = time_to_seconds(played)
+    total_sec = time_to_seconds(dur)
 
     x, y = str(round(played_sec/total_sec,1)).split(".")
     pos = int(y)
