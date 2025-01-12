@@ -65,11 +65,20 @@ def stream_markup_timer(_, chat_id, played, dur):
                 callback_data="GetTimer",
             )
         ],
-        [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
+        [
+            InlineKeyboardButton(
+                text="💫 sᴜᴩᴩᴏʀᴛ 💫", url=f"https://t.me/Lover_Music_Support"
+            ), 
+            
+            InlineKeyboardButton(
+                text="✯ ᴄʟᴏsᴇ ✯", callback_data="close"
+            ),
     ]
     return buttons
 
-
+[
+        
+]
 def stream_markup(_, chat_id):
     buttons = [
         [
@@ -80,18 +89,12 @@ def stream_markup(_, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text="🇮🇳 ᴩʟᴀʏʟɪsᴛ 🇮🇳",
-                callback_data=f"add_playlist {videoid}",
-            ),
-            InlineKeyboardButton(
                 text="💫 sᴜᴩᴩᴏʀᴛ 💫", url=f"https://t.me/Lover_Music_Support"
-            )
-        ],
-        [
+            ), 
+            
             InlineKeyboardButton(
                 text="✯ ᴄʟᴏsᴇ ✯", callback_data="close"
-            )
-        ],
+            ),
     ]
     return buttons
 
@@ -110,17 +113,9 @@ def playlist_markup(_, videoid, user_id, ptype, channel, fplay):
         ],
         [
             InlineKeyboardButton(
-                text="🇮🇳 ᴩʟᴀʏʟɪsᴛ 🇮🇳",
-                callback_data=f"add_playlist {videoid}",
+                text=_["CLOSE_BUTTON"],
+                callback_data=f"forceclose {videoid}|{user_id}",
             ),
-            InlineKeyboardButton(
-                text="💫 sᴜᴩᴩᴏʀᴛ 💫", url=f"https://t.me/Lover_Music_Support"
-            )
-        ],
-        [
-            InlineKeyboardButton(
-                text="✯ ᴄʟᴏsᴇ ✯", callback_data="close"
-            )
         ],
     ]
     return buttons
