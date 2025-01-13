@@ -12,7 +12,6 @@ from AviaxMusic.utils.decorators.language import language
 from AviaxMusic.utils.inline.play import close_keyboard
 
 ### Commands
-PING_COMMAND = get_command("PING_COMMAND")
 
 
 @app.on_message(
