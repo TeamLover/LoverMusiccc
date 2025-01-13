@@ -21,7 +21,7 @@ from AviaxMusic.utils.database import (
     is_maintenance,
 )
 from AviaxMusic.utils.inline import botplaylist_markup
-from config import PLAYLIST_IMG_URL, SUPPORT_GROUP, adminlist
+from config import PLAYLIST_IMG_URL, PRIVATE_BOT_MODE, SUPPORT_GROUP, adminlist
 from strings import get_string
 
 links = {}
@@ -50,13 +50,20 @@ def PlayWrapper(command):
                     text=f"{app.mention} ɪs ᴜɴᴅᴇʀ ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ, ᴠɪsɪᴛ <a href={SUPPORT_GROUP}>sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ</a> ғᴏʀ ᴋɴᴏᴡɪɴɢ ᴛʜᴇ ʀᴇᴀsᴏɴ.",
                     disable_web_page_preview=True,
                 )
+                if PRIVATE_BOT_MODE == str(True):
+            if not await is_served_private_chat(message.chat.id):
+                await message.reply_text(
+                    "**ᴩʀɪᴠᴀᴛᴇ ᴍᴜsɪᴄ ʙᴏᴛ**\n\nᴏɴʟʏ ғᴏʀ ᴛʜᴇ ᴄʜᴀᴛs ᴀᴜᴛʜᴏʀɪsᴇᴅ ʙʏ ᴛʜᴇ ᴏᴡɴᴇʀ. ʀᴇǫᴜᴇsᴛ ɪɴ ᴍʏ ᴏᴡɴᴇʀ's ᴩᴍ ᴛᴏ ᴀᴜᴛʜᴏʀɪsᴇ ʏᴏᴜʀ ᴄʜᴀᴛ ғᴏʀ ᴜsɪɴɢ ᴍᴇ."
+                )
+                return await app.leave_chat(message.chat.id)
+        if await is_commanddelete_on(message.chat.id):
+            try:
+                await message.delete()
+            except:
+                pass
                 
 
-        try:
-            await message.delete()
-        except:
-            pass
-
+        
         audio_telegram = (
             (message.reply_to_message.audio or message.reply_to_message.voice)
             if message.reply_to_message
