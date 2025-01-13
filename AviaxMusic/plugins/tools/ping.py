@@ -4,7 +4,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from AviaxMusic import app
-from AviaxMusic.core.call import Anony
+from AviaxMusic.core.call import Aviax
 from AviaxMusic.utils import bot_sys_stats
 from AviaxMusic.utils.decorators.language import language
 from AviaxMusic.utils.inline import supp_markup
@@ -19,7 +19,7 @@ async def ping_com(client, message: Message, _):
         photo=PING_IMG_URL,
         caption=_["ping_1"].format(app.mention),
     )
-    pytgping = await Anony.ping()
+    pytgping = await Aviax.ping()
     UP, CPU, RAM, DISK = await bot_sys_stats()
     resp = (datetime.now() - start).microseconds / 1000
     await response.edit_text(
