@@ -9,7 +9,6 @@ from AviaxMusic import app
 from AviaxMusic.core.call import Aviax
 from AviaxMusic.utils import bot_sys_stats
 from AviaxMusic.utils.decorators.language import language
-from AviaxMusic.utils.inline.play import close_keyboard
 
 ### Commands
 
