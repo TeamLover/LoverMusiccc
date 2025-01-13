@@ -1,12 +1,10 @@
 import asyncio
 import speedtest
 from pyrogram import filters
-from strings import get_command
 from AviaxMusic import app
 from AviaxMusic.misc import SUDOERS
+from AviaxMusic.utils.decorators.language import language
 
-# Commands
-SPEEDTEST_COMMAND = get_command("SPEEDTEST_COMMAND")
 
 
 def testspeed(m):
