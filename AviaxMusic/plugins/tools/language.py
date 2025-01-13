@@ -3,7 +3,7 @@ from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, Message
 
 from config import BANNED_USERS
-from strings import get_command, get_string
+from strings import get_string, languages_present
 from AviaxMusic import app
 from AviaxMusic.utils.database import get_lang, set_lang
 from AviaxMusic.utils.decorators import (ActualAdminCB, language,
