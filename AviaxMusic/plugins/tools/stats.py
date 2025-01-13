@@ -14,7 +14,7 @@ from config import BANNED_USERS
 
 from AviaxMusic import YouTube, app
 from AviaxMusic.core.userbot import assistants
-from AviaxMusic.misc import SUDOERS, pymongodb
+from AviaxMusic.misc import SUDOERS, mongodb
 from AviaxMusic.plugins import ALL_MODULES
 from AviaxMusic.utils.database import (get_global_tops,
                                        get_particulars, get_queries,
