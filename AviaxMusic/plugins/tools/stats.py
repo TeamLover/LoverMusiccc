@@ -11,7 +11,7 @@ from pytgcalls.__version__ import __version__ as pytgver
 
 import config
 from config import BANNED_USERS
-from strings import get_command
+
 from AviaxMusic import YouTube, app
 from AviaxMusic.core.userbot import assistants
 from AviaxMusic.misc import SUDOERS, pymongodb
@@ -31,17 +31,11 @@ from AviaxMusic.utils.inline.stats import (back_stats_buttons,
 
 loop = asyncio.get_running_loop()
 
-# Commands
-GSTATS_COMMAND = get_command("GSTATS_COMMAND")
-STATS_COMMAND = get_command("STATS_COMMAND")
 
 
-@app.on_message(
-    filters.command(STATS_COMMAND)
-    & filters.group
-    & ~filters.edited
-    & ~BANNED_USERS
-)
+
+
+@app.on_message(filters.command(["stats", "gstats"]) & filters.group & ~BANNED_USERS)
 @language
 async def stats_global(client, message: Message, _):
     upl = stats_buttons(
