@@ -4,7 +4,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from config import BANNED_USERS, PING_IMG_URL
-from strings import get_command
+
 from AviaxMusic import app
 from AviaxMusic.core.call import Aviax
 from AviaxMusic.utils import bot_sys_stats
